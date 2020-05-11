@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.14.0/js/canvas-to-blob.min.js"></script>
+
+</head>
+
+<body>
+
+    <div id="grid" style="display: inline-block">
+    </div>
+
+    <h1>Setup</h1>
+    <input id="width" placeholder="width"></input> x
+    <input id="height" placeholder="height"></input>
+    <button onclick="initializeGrid(document.getElementById('width').value, document.getElementById('height').value)">Initialize Grid</button>
+    <br/>
+    <input id="pixel_size" placeholder="square size (px)"></input>
+    <button onclick="pixelSize(document.getElementById('pixel_size').value)">Set Pixel Size</button>
+    <br/>
+    <input id="probability" type="number" placeholder="fill probability (percent)"></input>
+    <button onclick="randomizeGrid(document.getElementById('probability').value / 100.0)">Randomize Grid</button>
+
+    <h1>Evolution</h1>
+    <input id="randomfill" type="checkbox">Randomize Evolution<br/>
+    <input id="overcrowding" type="checkbox">Enable Overcrowding<br/>
+    <input id="delay" placeholder="evolution delay"></input>
+
+    <br/><br/>
+    <button onclick="evolveTimes(1)">Evolve</button>
+    <button onclick="evolveTimes(5)">5x</button>
+    <button onclick="evolveTimes(10)">10x</button>
+    <button onclick="evolveTimes(100)">100x</button>
+    <br/>
+    <button onclick="screenshot()">Save Screenshot</button>
+
+    <style>
+     .gridsquare {
+	 background-color: white;
+	 height: 3px;
+	 width: 3px;
+	 /* border: 1px solid black; */
+	 display: inline-block;
+     }
+
+     .gridsquare-active {
+	 background-color: black !important;
+     }
+
+     #grid {
+	 line-height: 0.2px;
+     }
+
+    </style>
+
+    <script>
+
+     state = []
+
+     function shuffle(a) {
+	 var j, x, i;
+	 for (i = a.length - 1; i > 0; i--) {
+             j = Math.floor(Math.random() * (i + 1));
+             x = a[i];
+             a[i] = a[j];
+             a[j] = x;
+	 }
+	 return a;
+     }
+
+     function pixelSize(s) {
+     $('.gridsquare').css('width', s + 'px')
+     $('.gridsquare').css('height', s + 'px')
+     }
+
+     function updateCell(live, x, y) {
+	 el = document.getElementById(x + ',' + y)
+	 if (live) {
+	     el.className = 'gridsquare gridsquare-active'
+	 }
+	 else {
+	     el.className = 'gridsquare'
+	 }
+
+     }
+
+     function onCellClick(x, y) {
+	 return function() {
+	     state[x][y] = !state[x][y]
+
+	     updateCell(state[x][y], x, y)
+	 }
+     }
+
+     function initializeGrid(y, x) {
+
+	 document.getElementById('grid').innerHTML = ''
+
+	 state = []
+	 for (i = 0; i < x; i++) {
+	     state.push([])
+	     for (j = 0; j < y; j++) {
+		 state[state.length - 1].push(0)
+
+		 // (i, j) -> (x, y)
+		 square = document.createElement('div')
+		 square.innerHTML = '&nbsp;'
+		 square.className = 'gridsquare'
+		 square.id = i + ',' + j
+		 square.onclick = onCellClick(i, j)
+
+		 document.getElementById('grid').appendChild(square)
+
+		 if (j == y - 1) {
+		     // we're at the end; add a <br/>
+		     br = document.createElement('br')
+		     document.getElementById('grid').appendChild(br)
+		 }
+	     }
+	 }
+     }
+
+     function randomizeGrid(p) {
+	 for (i = 0; i < state.length; i++) {
+	     for (j = 0; j < state[0].length; j++) {
+		 if (Math.random() < p) {
+		     state[i][j] = 1
+		 }
+		 else {
+		     state[i][j] = 0
+		 }
+		 updateCell(state[i][j], i, j)
+	     }
+	 }
+     }
+
+     function sleep(miliseconds) {
+	 var currentTime = new Date().getTime();
+
+	 while (currentTime + miliseconds >= new Date().getTime()) {
+	 }
+     }
+
+     function evolve(display=true) {
+	 x = state.length    // assuming a square matrix
+	 y = state[0].length
+	 delay = 0
+
+	 cells = []
+
+	 for (i = 0; i < x; i++) {
+	     for (j = 0; j < y; j++) {
+		 cells.push([i, j])
+	     }
+	 }
+
+
+	 if (document.getElementById('randomfill').checked) {
+	     cells = shuffle(cells)
+	 }
+
+	 console.log(cells)
+
+	 for (k = 0; k < cells.length; k++) {
+
+	     i = cells[k][0]
+	     j = cells[k][1]
+
+	     live = 0 // total tally
+
+	     // search up
+	     if (i > 0) {
+		 live += state[i - 1][j]
+	     }
+
+	     // search down
+	     if (i < x - 1) {
+		 live += state[i + 1][j]
+	     }
+
+	     // search left
+	     if (j > 0) {
+		 live += state[i][j - 1]
+	     }
+
+	     // search right
+	     if (j < y - 1) {
+		 live += state[i][j + 1]
+	     }
+
+	     if (document.getElementById('overcrowding').checked) {
+		 live = (live > 1) && (live < 4)
+	     }
+	     else {
+		 live = (live >= 2)
+	     }
+
+	     state[i][j] = live
+	     delay += 0
+	     if (display) {
+		 window.setTimeout(updateCell.bind(null, live, i, j), delay)
+	     }
+	 }
+
+     }
+
+     function evolveTimes(n) {
+	 for (i = 0; i < n - 1; i++) {
+	     evolve(false)
+	 }
+	 evolve()
+
+     }
+
+     initializeGrid(100, 100)
+     randomizeGrid(0.5)
+
+    </script>
+
+    <script>
+     function screenshot() {
+         html2canvas($("#grid"), {
+             onrendered: function(canvas) {
+                 theCanvas = canvas;
+
+
+                 canvas.toBlob(function(blob) {
+		     alert('Saved as screenshot.png.')
+                     saveAs(blob, "screenshot.png");
+                 });
+             }
+         });
+     }
+    </script>
+</body>
