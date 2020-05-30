@@ -26,7 +26,11 @@
         text-decoration: none;
     }
 
-    a:active {
+    a {
+        transition: color 0.2s ease;
+    }
+
+    a:hover {
         color: darkgray;
     }
 
@@ -36,9 +40,21 @@
 
     .page-body {
 	padding: 2em;
-	border: 1px solid black;
+        background-color: #eeffff;
+        border: 1px solid #ddeeee;
+        position: relative;
     }
 
+    .page-body:after {
+        content: '';  /* Added this rule */
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: 5px;
+        bottom: 5px;
+        border: 1px solid black;
+        pointer-events: none;
+    }
 
     .page-body  .page-description{
 	padding-left: 6.0em;
@@ -145,6 +161,23 @@
       transition: height 2s width 2s;
       font-weight: bold;
       text-decoration: underline;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      background-color: #eeffff;
+      border: 1px solid #ddeeee;
+      position: relative;
+  }
+
+  .button:after {
+      content: '';  /* Added this rule */
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: 5px;
+      bottom: 5px;
+      border: 1px solid black;
+  }
+  .button:active {
+      color: darkgray;
   }
 </style>
 
