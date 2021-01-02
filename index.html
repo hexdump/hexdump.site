@@ -1,184 +1,129 @@
 <!DOCTYPE html>
-<head>
-  <!-- nice 8bit terminal-y font to use. i know i could use the linux console font, but this looks flashier to non-computer people -->
-  <link href="SourceCodePro.css" rel="stylesheet">
-  <script src="embed-github-projects.js"></script>
-
+<html>
+ <head>
   <style>
-    html, head, body {
-    }
-    body {
-        font-family: 'Source Code Pro';
-        margin-top: 10%;
-        margin-bottom: 10%;
-    }
-    body > * {
-	margin-left: 20%;
-	margin-right: 20%;
-	margin-top:2%;
-    }
-
-    .indented {
-	padding-left: 1em;
-    }
-    a {
-        color: black;
-        text-decoration: none;
-    }
-
-    a {
-        transition: color 0.2s ease;
-    }
-
-    a:hover {
-        color: darkgray;
-    }
-
-    a:active {
-        color: darkgray;
-    }
-
-    .page-body {
-	padding: 2em;
-        background-color: #eeffff;
-        border: 1px solid #ddeeee;
-        position: relative;
-    }
-
-    .page-body:after {
-        content: '';  /* Added this rule */
-        position: absolute;
-        top: -5px;
-        left: -5px;
-        right: 5px;
-        bottom: 5px;
-        border: 1px solid black;
-        pointer-events: none;
-    }
-
-    .page-body  .page-description{
-	padding-left: 6.0em;
-    }
-
-    .page-body .page-section {
-	padding-left: 6.0em;
-	overflow-x: wrap;
-	width: 100%;
-    }
-
-    .page-body .page-subsection {
-	padding-left: 12.0em;
-	text-indent: -6.0em;
-    }
-
-    #container {
-	text-align: center;
-    }
-    a > strong {
-        text-decoration: underline;
-    }
-    
-    a:hover > strong {
-    }
+   * {
+  margin: 0;
+  padding: 0;
+}
+html {
+margin: 0;
+padding: 0;
+height: 0;
+background-image: url("background-blurred.jpg");
+background-size: cover;
+}
+head {
+margin: 0;
+padding: 0;
+height: 0;
+}
+body {
+color: #fffae3;
+padding: 0;
+margin: 10%;
+}
+h1, h2 {
+font-style: italic;
+background-color: #263a2c;
+color: #db9d47;
+padding: 0.5em;
+position: relative;
+margin: 0;
+box-shadow: 0px 0px 2px black;
+}
+h2 {
+font-size: 1.8em;
+}
+h3 {
+display: block;
+font-size: 1.5em;
+}
+div {
+background-color: #fffae3;
+color: #240b36;
+padding: 1em;
+margin-left: 5px;
+margin-right: 5px;
+box-shadow: 0px 0px 2px black;
+}
+a {
+text-decoration: none;
+color: inherit;
+}
+a:hover {
+color: #6c9a8b;
+}
+a:after{
+content: " »";
+}
+a:hover:after {
+position: relative;
+left: 5px;
+}
   </style>
-  <title>hexdump.site</title>
-</head>
-
-<body>
-
-  <div id="page-body" class="page-body">
-    <strong>welcome to my website!</strong><br/><br/>
-    hi! my name is <strong>liam schumm.</strong> i go by <strong>@hexdump</strong> on online services.
-    i'm a 19 year old programmer from chicago, with a passion for programming languages and open source software.
-    
-    <br/><br/>
-
-    <strong>what i'm working on</strong>
-    <br/><br/>
-
-    <div class="indented">
-      <a href="https://limelang.xyz">
-	<strong>lime</strong>
-        i'm developing lime, an experimental programming language. while in previous incarnations it wass a stack-based compiled programming language, i'm currently developing it as a interpreted, purely functional language with powerful runtime verification.
-      </a>
-      <br/>
-      <br/>
-
-      <span>
-        <strong>programmable matter</strong>
-        i'm working with professor edward rietman at the university of massachusetts, amherst on applying physical resivoir computing to machine learning.
-      </span>    
-    </div>
-    <br/>
-    
-    
-    <strong>what i've done</strong>
-    <br/><br/>
-    <div class="indented">      
-      <a href="https://github.com/ergonomica/ergonomica">
-	<strong>ergonomica</strong>
-        i created ergonomica, a modern command-line shell based on lisp and interoperable with the standard unix and dos systems. i use this shell on a daily basis, and had the opportunity to present this project both at python and on <em>podcast.__init__</em>.
-      </a>
-
-      <br/>
-      <br/>
-
-      <a href="https://codeday.org/chicago">
-        <strong>codeday</strong>
-        i'm a long time volunteer and attendee at codeday chicago, where i help kids through teaching and one-on-one workshops to use coding as a tool for empowering their passions and pursuits.
-	</span>
-      </a>
-
-      <br/>
-      <br/>
-
-      <a href="https://chicode.net">
-	<strong>chicode</strong>
-	i co-founded chicode along with anton outkine, christian sparks, and a few other chicago high schoolers. in just a few months, we organized a hackathon of nearly 150 Chicago Public Schools students to come together for 24 hours and learn to code. chicode works around the school year to organize events, run school clubs, and create educational resources to improve computer science education across chicago.
-      </a>
-
-      <br/>
-      <br/>
-
-    </div>
-
-    
+ </head>
+ <body>
+  <h1>
+   Hello!
+  </h1>
+  <p>
+  </p>
+  <div>
+   My name is
+   <strong>
+    Liam Schumm
+   </strong>
+   <em>
+    (he/him)
+   </em>
+   . I go by
+   <strong>
+    @hexdump
+   </strong>
+   on most online services. I'm a 19 year old from Chicago interested in AI (specifically in the domain of systems theory and emergent behavior), as well as simple, elegant developer tooling. I'm currently in my second year at Hampshire College.
   </div>
-  
-    <a class="button" href="files/cv.pdf">download my cv</a>
-    <a class="button" href="https://blog.liamschumm.com">visit my blog</a>
-    <a class="button" href="https://github.com/hexdump">visit my github</a>
-    
-</body>
-
-<style>
-  .button {
-      display: block;
-      padding: 1em;
-      border: 1px solid black;
-      background-size: 50% 100%;
-      text-align: center;
-      transition: height 2s width 2s;
-      font-weight: bold;
-      text-decoration: underline;
-      transition: background-color 0.2s ease, color 0.2s ease;
-      background-color: #eeffff;
-      border: 1px solid #ddeeee;
-      position: relative;
-  }
-
-  .button:after {
-      content: '';  /* Added this rule */
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      right: 5px;
-      bottom: 5px;
-      border: 1px solid black;
-  }
-  .button:active {
-      color: darkgray;
-  }
-</style>
-
+  <p>
+  </p>
+  <h2>
+   Projects
+  </h2>
+  <div>
+   <h3>
+    UMass BINDS
+   </h3>
+   <p>
+    For the past year, I've been working with professor Ed Rietman at the UMass BINDS (Biologically-Inspired Neuro-Dynamical Systems) lab on reservoir computing on exotic and FPGA substrates.
+   </p>
+   <h3>
+    Ergonomica
+   </h3>
+   <p>
+    In my spare time, I work on a project called Ergonomica. Ergonomica is a Python-based shell that aims to provide a cohesive shell experience which draws inspiration from both traditional shells as well as modern programming language design. Also under the Ergonomica name, I'm currently developing a Python-based, minimal text editor.
+   </p>
+   <h3>
+   </h3>
+  </div>
+  <h2>
+   Links
+  </h2>
+  <div>
+   <h3>
+    <a href="https://blog.hexdump.site">
+     Blog
+    </a>
+   </h3>
+   <p>
+    I write about mostly technical things, but I'd also like to write up some of my thoughts and explorations in other domains, since I firmly believe that your life shouldn't be defined by technical contributions.
+   </p>
+   <h3>
+    <a href="https://github.com/hexdump">
+     GitHub
+    </a>
+   </h3>
+   <p>
+    I like to publish libraries and packages on GitHub. Mainly these projects are things that I've come up with for my own use, but hopefully somebody else will make good use of them as well.
+   </p>
+  </div>
+ </body>
 </html>
